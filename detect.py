@@ -6,6 +6,7 @@ import cv2
 import torch
 import torch.backends.cudnn as cudnn
 from numpy import random
+from tqdm import tqdm
 
 from models.experimental import attempt_load
 from utils.datasets import LoadStreams, LoadImages
@@ -68,7 +69,7 @@ def detect(save_img=False):
 
     t0 = time.time()
     
-    for path, img, im0s, vid_cap in dataset:
+    for path, img, im0s, vid_cap in tqdm(dataset,total=len(dataset)):
         img = torch.from_numpy(img).to(device)
         img = img.half() if half else img.float()  # uint8 to fp16/32
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
