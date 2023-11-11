@@ -98,7 +98,7 @@ def detect(save_img=False):
             pred = apply_classifier(pred, modelc, img, im0s)
 
         # Process detections
-        print("pred: ",pred)
+        # print("pred: ",pred)
         for i, det in enumerate(pred):  # detections per image
             if webcam:  # batch_size >= 1
                 p, s, im0, frame = path[i], '%g: ' % i, im0s[i].copy(), dataset.count
@@ -108,7 +108,7 @@ def detect(save_img=False):
             p = Path(p)  # to Path
             save_path = str(save_dir / p.name)  # img.jpg
             txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
-            print("text file: ",txt_path)
+            # print("text file: ",txt_path)
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             if len(det):
                 # Rescale boxes from img_size to im0 size
@@ -124,17 +124,17 @@ def detect(save_img=False):
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if opt.save_conf else (cls, *xywh)  # label format
-                        print("Starting write file....")
+                        # print("Starting write file....")
                         with open(txt_path + '.txt', 'a') as f:
                             f.write(('%g ' * len(line)).rstrip() % line + '\n')
-                            print("Writed to file")
+                            # print("Writed to file")
 
                     if save_img or view_img:  # Add bbox to image
                         label = f'{names[int(cls)]} {conf:.2f}'
                         plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
 
             # Print time (inference + NMS)
-            print(f'{s}Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
+            # print(f'{s}Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
 
             # Stream results
             if view_img:
@@ -145,7 +145,7 @@ def detect(save_img=False):
             if save_img:
                 if dataset.mode == 'image':
                     cv2.imwrite(save_path, im0)
-                    print(f" The image with the result is saved in: {save_path}")
+                    # print(f" The image with the result is saved in: {save_path}")
                 else:  # 'video' or 'stream'
                     if vid_path != save_path:  # new video
                         vid_path = save_path
