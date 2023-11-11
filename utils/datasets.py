@@ -132,6 +132,7 @@ class LoadImages:  # for inference
             files = sorted(glob.glob(p, recursive=True))  # glob
         elif os.path.isdir(p):
             files = sorted(glob.glob(os.path.join(p, '*.*')))  # dir
+            files=sorted(files, key=lambda x: (x.split('/')[-1].split('_')[0], x.split('/')[-1].split('_')[1], x.split('/')[-1].split('_')[2],int(x.split('/')[-1].split('_')[-1].split('.')[0])))
         elif os.path.isfile(p):
             files = [p]  # files
         else:
